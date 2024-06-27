@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="{% static 'room.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <header>
+            <h1 id="room-name">{{name}}</h1>
+        </header>
+        <div class="messages-wrapper">
+            {% for message in messages %}
+            <div class="messages">
+                <div class="message">
+                    <div class="message-info">
+                        <span class="message-user">{{message.user}}</span>
+                        <span class="message-time">{{message.time}}</span>
+                    </div>
+                    <div class="message-text">
+                        {{message.content}}
+                    </div>
+                </div>
+                
+                <!-- More messages -->
+            </div>
+            {% endfor %}
+        </div>
+        <form class="message-form" action="{% url 'room' name=name username=username %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="message" id="message-input" placeholder="Type your message here..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>
